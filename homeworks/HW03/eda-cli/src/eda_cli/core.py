@@ -188,39 +188,41 @@ def compute_quality_flags(summary: DatasetSummary, missing_df: pd.DataFrame) -> 
     flags["too_many_missing"] = max_missing_share > 0.5
 
 
-    # Добавлено мной по HW03: has_constant_columns. Флаг, показывающий, есть ли колонки, где все значения одинаковые.
+    # Добавлено мной по HW03: проверка на константные колонки
+    # Я проверяю, есть ли колонка, где все значения одинаковые.
     constant_columns = []
     for col in summary.columns:
-        if col.unique <= 1:  # все значения одинаковые
+        if col.unique <= 1:  # если количество уникальных <= 1, все значения одинаковые
             constant_columns.append(col.name)
 
     flags["constant_columns"] = constant_columns
     flags["has_constant_columns"] = len(constant_columns) > 0
 
-
-    # Добавлено мной по HW03: has_high_cardinality_categoricals. Флаг, сигнализирующий, что есть категориальные признаки с очень большим числом уникальных значений (нужно определить свой порог).
-    high_cardinality_cols = []
-    HIGH_CARD_THRESHOLD = 50  # простой осмысленный порог
+    
+    # Добавлено мной по HW03: high-cardinality категориальные колонки
+    # Здесь я проверяю категориальные признаки, у которых слишком много уникальных значений.
+    HIGH_CARD_THRESHOLD = 50  # выбрала простой порог
+    high_card_cols = []
 
     for col in summary.columns:
         if (not col.is_numeric) and col.unique > HIGH_CARD_THRESHOLD:
-            high_cardinality_cols.append(col.name)
+            high_card_cols.append(col.name)
 
-    flags["high_cardinality_categoricals"] = high_cardinality_cols
-    flags["has_high_cardinality_categoricals"] = len(high_cardinality_cols) > 0
+    flags["high_cardinality_categoricals"] = high_card_cols
+    flags["has_high_cardinality_categoricals"] = len(high_card_cols) > 0
 
 
     # Простейший «скор» качества
     score = 1.0
-    score -= max_missing_share  # чем больше пропусков, тем хуже
-    if summary.n_rows < 100:
-        score -= 0.2
-    if summary.n_cols > 100:
-        score -= 0.1
+    score -= max_missing_share 
+    # if summary.n_rows < 100:
+    #     score -= 0.2
+    # if summary.n_cols > 100:
+    #     score -= 0.1
     if flags["has_constant_columns"]:
-        score -= 0.1
+        score -= 0.1  # небольшой штраф за такие колонки
     if flags["has_high_cardinality_categoricals"]:
-        score -= 0.1
+        score -= 0.1  # штраф за слишком "редкие" категориальные признаки
 
     score = max(0.0, min(1.0, score))
     flags["quality_score"] = score

@@ -59,3 +59,30 @@ def test_correlation_and_top_categories():
     city_table = top_cats["city"]
     assert "value" in city_table.columns
     assert len(city_table) <= 2
+
+
+def test_my_hw03_new_flags():
+
+    # Добавлено мной по HW03
+
+    # Здесь я создаю DataFrame с константной колонкой и колонкой с большим числом уникальных значений, чтобы проверить работу моих двух новых эвристик.
+
+    n_rows = 60  # беру 60 строк, чтобы хватило уникальных значений
+
+    df = pd.DataFrame({
+        "constant_col": [1] * n_rows,  # все одинаковые - константная колонка
+        "normal_col": list(range(n_rows)), # просто числовая колонка без особенностей
+        "cat_col": [f"a{i}" for i in range(n_rows)],  # 60 уникальных значений - high-cardinality
+    })
+
+    summary = summarize_dataset(df)
+    missing_df = missing_table(df)
+    flags = compute_quality_flags(summary, missing_df)
+
+    # Проверка константных колонок
+    assert flags["has_constant_columns"] is True
+    assert "constant_col" in flags["constant_columns"]
+
+    # Проверка high-cardinality колонок
+    assert flags["has_high_cardinality_categoricals"] is True
+    assert "cat_col" in flags["high_cardinality_categoricals"]            

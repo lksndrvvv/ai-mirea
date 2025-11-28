@@ -113,6 +113,14 @@ def report(
         f.write(f"- Слишком много колонок: **{quality_flags['too_many_columns']}**\n")
         f.write(f"- Слишком много пропусков: **{quality_flags['too_many_missing']}**\n\n")
 
+
+        f.write("## Дополнительные эвристики качества (добавлено мной)\n\n")
+        f.write(f"- Константные колонки: {quality_flags['constant_columns']}\n")
+        f.write(f"- High-cardinality признаки: {quality_flags['high_cardinality_categoricals']}\n\n")
+
+
+
+
         f.write("## Колонки\n\n")
         f.write("См. файл `summary.csv`.\n\n")
 
