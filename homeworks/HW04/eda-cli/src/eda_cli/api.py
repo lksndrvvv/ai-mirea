@@ -242,3 +242,30 @@ async def quality_from_csv(file: UploadFile = File(...)) -> QualityResponse:
         flags=flags_bool,
         dataset_shape={"n_rows": n_rows, "n_cols": n_cols},
     )
+
+
+
+@app.post("/quality-flags-from-csv", tags=["quality"])
+async def quality_flags_from_csv(file: UploadFile = File(...)):
+    """
+    HW04: эндпоинт, возвращающий ВСЕ флаги качества,
+    включая HW03-эвристики (constant_columns, high_cardinality и др.)
+    """
+    import io
+    # Читаем CSV
+    try:
+        content = await file.read()
+        df = pd.read_csv(io.BytesIO(content))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Не удалось прочитать CSV-файл")
+
+    if df.empty:
+        raise HTTPException(status_code=400, detail="CSV-файл пуст.")
+
+    # Вызываем EDA-ядро
+    summary = summarize_dataset(df)
+    missing_df = missing_table(df)
+    flags = compute_quality_flags(summary, missing_df)
+
+    # Возвращаем ВЕСЬ словарь флагов
+    return {"flags": flags}
