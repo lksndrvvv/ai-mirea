@@ -1,0 +1,50 @@
+{
+  "dataset_01": {
+    "KMeans": {
+      "noise_share": 0.0,
+      "silhouette": 0.5216395622404242,
+      "davies_bouldin": 0.6853295219054459,
+      "calinski_harabasz": 11786.95462267153
+    },
+    "DBSCAN": {
+      "noise_share": 0.0,
+      "silhouette": 0.3967888223601393,
+      "davies_bouldin": 0.9644102343879997,
+      "calinski_harabasz": 10446.597694416176
+    }
+  },
+  "dataset_02": {
+    "KMeans": {
+      "noise_share": 0.0,
+      "silhouette": 0.3068610017701601,
+      "davies_bouldin": 1.3234721699867644,
+      "calinski_harabasz": 3573.3933329348392
+    },
+    "DBSCAN": {
+      "noise_share": 0.061875,
+      "silhouette": 0.13486343378295018,
+      "davies_bouldin": 0.6041569055438107,
+      "calinski_harabasz": 31.396114775294762
+    }
+  },
+  "dataset_04": {
+    "KMeans": {
+      "noise_share": 0.0,
+      "silhouette": 0.4480173757704073,
+      "davies_bouldin": 0.9756940955278773,
+      "calinski_harabasz": 5103.099776986092
+    },
+    "Agglomerative_ward": {
+      "noise_share": 0.0,
+      "silhouette": 0.4480173757704073,
+      "davies_bouldin": 0.9756940955278773,
+      "calinski_harabasz": 5103.099776986092
+    },
+    "Agglomerative_average": {
+      "noise_share": 0.0,
+      "silhouette": 0.4480173757704073,
+      "davies_bouldin": 0.9756940955278773,
+      "calinski_harabasz": 5103.099776986093
+    }
+  }
+}

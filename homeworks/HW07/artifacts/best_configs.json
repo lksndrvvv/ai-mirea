@@ -1,0 +1,23 @@
+{
+  "dataset_01": {
+    "method": "KMeans",
+    "params": {
+      "k": 2
+    },
+    "criterion": "silhouette"
+  },
+  "dataset_02": {
+    "method": "KMeans",
+    "params": {
+      "k": 2
+    },
+    "criterion": "silhouette"
+  },
+  "dataset_04": {
+    "method": "KMeans",
+    "params": {
+      "k": 5
+    },
+    "criterion": "silhouette"
+  }
+}
