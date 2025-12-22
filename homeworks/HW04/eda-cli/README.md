@@ -125,6 +125,9 @@ compute_quality_flags;
 - has_high_cardinality_categoricals
 
 Пример ответа:
+Пример ответа:
+
+```json
 {
   "flags": {
     "too_few_rows": true,
@@ -134,3 +137,4 @@ compute_quality_flags;
     "quality_score": 0.78
   }
 }
+```
